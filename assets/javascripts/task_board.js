@@ -36,6 +36,39 @@
   };
 })();
 
+var TaskBoardFilters = Class.extend({
+  filters: {
+    priority: 0,
+    category: 0,
+    assignee: 0, // only used on project taskboard
+    project: 0 // only used on "my" taskboard
+  },
+  init: function() {
+    var self = this;
+    $('#taskboard-filters').on('change', 'select', function() {
+      self.filters[$(this).attr('name')] = parseInt($(this).val());
+      self.applyFilters();
+    });
+  },
+  applyFilters: function() {
+    var self = this;
+    $('#sortable-root').find('li.card').each(function() {
+      var minimized = false;
+      for (var f in self.filters) {
+        if (self.filters[f] == 0 || self.filters[f] == parseInt($(this).data(f))) {
+          continue;
+        }
+        else {
+          minimized = true;
+          break;
+        }
+      }
+      if (minimized) $(this).hide();
+      else $(this).show();
+    });
+  }
+});
+
 var TaskBoardSortable = Class.extend({
   
   sortable: null,
@@ -274,3 +307,28 @@ var TaskBoardSettings = TaskBoardSortable.extend({
   }
 
 });
+
+var TaskBoardStatuses = TaskBoardSortable.extend({
+  init: function(cls, options) {
+    this.cls = cls;
+    this.options = options;
+    this.options.update = this.setInputs;
+    this.root = $('.' + this.cls);
+    this.root.sortable(this.options);
+    this.setInputs();
+  },
+
+  setInputs: function() {
+    $('div.dyn-column').each(function() {
+      var weight = 0,
+          column_id = $(this).data('column-id'),
+          $input_wrapper = $(this).find('div.input-wrapper');
+      $input_wrapper.empty();
+      $(this).find('.status-pill').each(function() {
+        $input_wrapper.append(
+          '<input type="hidden" name="status[' + column_id + '][' + $(this).data('status-id') + ']" value=' + (weight++) + '" />'
+        );
+      });
+    });
+  }
+})

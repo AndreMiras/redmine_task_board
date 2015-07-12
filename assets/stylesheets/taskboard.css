@@ -1,6 +1,11 @@
 .taskboard-wrapper {
   width: 100%;
   overflow: auto;
+  margin-top: 32px;
+}
+
+.my-taskboard-wrapper {
+  margin-top: 32px;
 }
 
 .taskboard-pane {
@@ -42,6 +47,11 @@
   list-style-type: none;
   margin: 0 0 6px 0;
   padding: 0;
+  position: static;
+  font-size: 1em;
+  height: auto;
+  white-space: normal;
+  line-height: auto;
 }
 
 .taskboard-pane ul li.card.over-limit div.issue {
@@ -61,6 +71,11 @@
 
 .taskboard-pane ul li.card.support div.issue {
   border: solid 1px #00529B;
+  border-top-width: 3px;
+}
+
+.taskboard-pane ul li.card.task div.issue {
+  border: solid 1px #a73ee5;
   border-top-width: 3px;
 }
 
@@ -108,6 +123,19 @@
 
 #main.nosidebar #content {
   position: relative;
+}
+
+#taskboard-filters {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #dadada;
+  padding: 4px;
+}
+
+#taskboard-filters p {
+  margin: 0;
+  padding: 0;
 }
 
 #taskboard-buttons {
@@ -161,3 +189,33 @@ ul#not-prioritized {
   margin-bottom: 0;
   overflow: hidden;
 }
+
+.taskboard-pane ul li.card.minimized div.issue {
+  background-color: #efefef;
+  border: none;
+  padding: 0px;
+  margin-bottom: -2px;
+  margin-top: -2px;
+  height: 12px;
+  overflow: hidden;
+}
+
+.taskboard-pane ul li.card.minimized div.issue .issue-heading,
+.taskboard-pane ul li.card.minimized div.issue p.meta {
+  display: none;
+}
+
+.taskboard-pane ul li.card.minimized div.issue h3,
+.taskboard-pane ul li.card.minimized div.issue h3 a {
+  font-size: 10px;
+  line-height: 10px;
+  color: #aaa;
+}
+
+#not-prioritized-wrapper li.card.minimized {
+  display: none;
+}
+
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }
